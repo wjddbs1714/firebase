@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1082163777139",
+    "firebase_url": "https://codevalley-ce1fd-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "codevalley-ce1fd",
+    "storage_bucket": "codevalley-ce1fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1082163777139:android:ab32a1414aed70c3ce2406",
+        "android_client_info": {
+          "package_name": "com.example.codevalley"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCd6rdwuX5C3Gg97DrS5dSswU_vRDBbKH0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
