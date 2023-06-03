@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <corners
+        android:bottomRightRadius="30dp"
+        android:bottomLeftRadius="30dp"
+        android:topLeftRadius="30dp"
+        android:topRightRadius="30dp"/>
+
+</shape>
+
+
+<!--shape을 rectangle로 해주고
+<corners> 태그에서 bottomRightRadius, bottomLeftRadius,
+topLeftRadius, topRightRadius로 각 모서리를 설정해준다.-->
