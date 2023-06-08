@@ -86,21 +86,25 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
 
+
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 if (snapshot.exists()){
                     loginUsername.setError(null);
-                    String passwordFromDB = snapshot.child(userUsername).child("password").getValue(String.class);
+                    String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
+                    String passwordFromDB = snapshot.child(userPassword).child("password").getValue(String.class);
 
-                    if (!Objects.equals(passwordFromDB, userPassword)) {
-                        loginUsername.setError(null);
-                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                        startActivity(intent);
-                    } else {
-                        loginPassword.setError("비밀번호가 알맞지 않아요!");
-                        loginPassword.requestFocus();
+                    if (!Objects.equals(usernameFromDB, userUsername)) {
+                        if(!Objects.equals(passwordFromDB, userPassword)){
+                            loginUsername.setError(null);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                        } else{
+                            loginPassword.setError("비밀번호가 알맞지 않아요!");
+                            loginPassword.requestFocus();
+                        }
                     }
                 } else {
                     loginUsername.setError("유저가 존재하지 않아요!");
