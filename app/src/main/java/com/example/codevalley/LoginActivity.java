@@ -41,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!validateUsername() | !validatePassword()) {
 
                 } else {
-                    checkUser();
+                    checkUsername();
                 }
             }
         });
@@ -79,34 +79,23 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void checkUser(){
+    public void checkUsername(){
         String userUsername = loginUsername.getText().toString().trim();
-        String userPassword = loginPassword.getText().toString().trim();
 
         DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
         Query checkUserDatabase = reference.orderByChild("username").equalTo(userUsername);
 
-
         checkUserDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 if (snapshot.exists()){
                     loginUsername.setError(null);
                     String usernameFromDB = snapshot.child(userUsername).child("username").getValue(String.class);
-                    String passwordFromDB = snapshot.child(userPassword).child("password").getValue(String.class);
 
                     if (!Objects.equals(usernameFromDB, userUsername)) {
-                        if(!Objects.equals(passwordFromDB, userPassword)){
-                            loginUsername.setError(null);
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            startActivity(intent);
-                        } else{
-                            loginPassword.setError("비밀번호가 알맞지 않아요!");
-                            loginPassword.requestFocus();
-                        }
+                        checkPassword();
                     }
-                } else {
+                }else {
                     loginUsername.setError("유저가 존재하지 않아요!");
                     loginUsername.requestFocus();
                 }
@@ -118,4 +107,37 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void checkPassword() {
+        String userPassword = loginPassword.getText().toString().trim();
+
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("users");
+        Query checkPwDatabase = reference.orderByChild("password").equalTo(userPassword);
+
+        checkPwDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    loginPassword.setError(null);
+                    String passwordFromDB = snapshot.child(userPassword).child("password").getValue(String.class);
+
+                    if(!Objects.equals(passwordFromDB, userPassword)) {
+                        loginUsername.setError(null);
+                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                            startActivity(intent);
+                    }
+                }else {
+                    loginPassword.setError("비밀번호가 일치하지 않아요!");
+                    loginPassword.requestFocus();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 }
